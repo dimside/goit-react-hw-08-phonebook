@@ -1,23 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectContacts, selectSortedContacts } from 'redux/contactsSlice';
-import { selectFilter } from 'redux/filterSlice';
-import { getContactsThunk, deleteContactThunk } from 'redux/operations';
+import { selectContacts, selectSortedContacts } from 'redux/contacts/selectors';
+import { selectFilter } from 'redux/contacts/selectors';
+import { deleteContactThunk } from 'redux/contacts/operations';
 
 import { Contact } from 'components/Contact/Contact';
 import css from './ContactList.module.css';
 
 
 export const ContactList = () => {
-  const [deletedId, setDeletedId] = useState(null)
-  const [isSorted, setIsSorted] = useState(false)
+  const [deletedId, setDeletedId] = useState(null);
+  const [isSorted, setIsSorted] = useState(false);
 
   const filter = useSelector(selectFilter);
   const { items: contacts } = useSelector(selectContacts);
-  
+
   const sortedContacts = useSelector(selectSortedContacts);
-  
 
   const contactsForRender = isSorted ? sortedContacts : contacts;
 
@@ -28,10 +27,6 @@ export const ContactList = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getContactsThunk());
-  }, [dispatch]);
-
   const handleContactDelete = contactId => {
     setDeletedId(contactId);
     dispatch(deleteContactThunk(contactId));
@@ -39,7 +34,7 @@ export const ContactList = () => {
 
   const toggleSort = () => {
     setIsSorted(prev => !prev);
-  }
+  };
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import { createSelector, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import {
   getContactsThunk,
@@ -92,10 +92,3 @@ const contactsSlice = createSlice({
 });
 
 export const contactsReducer = contactsSlice.reducer;
-
-// selectors
-export const selectContacts = state => state.contacts;
-
-export const selectSortedContacts = createSelector([selectContacts], contacts =>
-  [...contacts.items].sort((a, b) => a.name.localeCompare(b.name))
-);

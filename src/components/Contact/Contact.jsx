@@ -5,12 +5,12 @@ import { FcContacts } from 'react-icons/fc';
 import { PiPhoneCallDuotone } from 'react-icons/pi';
 import { RotatingLines } from 'react-loader-spinner';
 
-import { selectContacts } from 'redux/contactsSlice';
+import { selectContacts } from 'redux/contacts/selectors';
 
 import css from './Contact.module.css';
 
 export const Contact = ({ contact, onContactDelete, deletedId }) => {
-  const { name, phone, id } = contact;
+  const { name, number: phone, id } = contact;
   const {
     isLoading: { isDeleting },
   } = useSelector(selectContacts);

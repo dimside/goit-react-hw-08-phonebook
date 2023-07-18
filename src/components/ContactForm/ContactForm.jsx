@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RotatingLines } from 'react-loader-spinner';
-import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
-
-import { selectContacts } from 'redux/contactsSlice';
-import { addContactThunk } from 'redux/operations';
+import { selectContacts } from 'redux/contacts/selectors';
+import { addContactThunk } from 'redux/contacts/operations';
 
 import css from './ContactForm.module.css';
+
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
@@ -19,7 +19,7 @@ export const ContactForm = () => {
     items: contacts,
     isLoading: { isLoadingContact },
   } = useSelector(selectContacts);
-  const formInfo = { name, phone: number };
+  const formInfo = { name, number };
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
@@ -43,7 +43,7 @@ export const ContactForm = () => {
     });
 
     if (isContactIncuded) {
-      alert(`${formInfo.name} is already in contacts`);
+      toast.warn(`${formInfo.name} is already in contacts`);
     } else {
       dispatch(addContactThunk(formInfo));
     }
@@ -54,7 +54,6 @@ export const ContactForm = () => {
 
   return (
     <div>
-      <ToastContainer />
       <form onSubmit={handleSubmit} className={css.contact_form}>
         <label className={css.form_label}>
           Name
