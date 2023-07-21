@@ -5,6 +5,7 @@ import { useAuth } from 'hooks/useAuth';
 
 import { FormLabel, Flex, Button, Input } from '@chakra-ui/react';
 import { formStyle, inputStyle } from 'style/style';
+import { toast } from 'react-toastify';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,10 @@ export const RegisterForm = () => {
       email: form.elements.email.value,
       password: form.elements.password.value,
     };
+    if (formData.password.length < 8) {
+      toast.warn("Password must be more than seven symbols!")
+      return
+    }
     dispatch(registerAuthThunk(formData));
     form.reset();
   };
