@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getContacts, postContact, deleteContact } from 'services';
+import { getContacts, postContact, deleteContact, editContact } from 'services';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -38,6 +38,21 @@ export const deleteContactThunk = createAsyncThunk(
       toast.info(`${res.name} deleted from contacts`);
       return res;
     } catch (error) {
+      toast.warn(error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editContactThunk = createAsyncThunk(
+  'contacts/editContact',
+  async ({ id, contact }, thunkAPI) => {
+    try {
+      const res = await editContact(id, contact);
+      toast.info(`Contact ${res.name} changed`);
+      return res;
+    } catch (error) {
+      console.log('errorEdit', error);
       toast.warn(error.message);
       return thunkAPI.rejectWithValue(error.message);
     }

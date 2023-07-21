@@ -9,12 +9,20 @@ import { RotatingLines } from 'react-loader-spinner';
 import { selectContacts } from 'redux/contacts/selectors';
 
 import { Flex, Button, Icon, Text, Link } from '@chakra-ui/react';
+import { EditModal } from 'components/Modal/Modal';
 
-export const Contact = ({ contact, onContactDelete, deletedId }) => {
+export const Contact = ({
+  contact,
+  onContactDelete,
+  deletedId,
+  onChangeId,
+  changedId,
+}) => {
   const { name, number: phone, id } = contact;
   const {
     isLoading: { isDeleting },
   } = useSelector(selectContacts);
+
   return (
     <Flex as="li" align="center">
       <Flex w={370} textTransform="capitalize">
@@ -35,10 +43,16 @@ export const Contact = ({ contact, onContactDelete, deletedId }) => {
           {phone}
         </Link>
       </Flex>
+      <EditModal
+        contact={contact}
+        changedId={changedId}
+        onChangeId={onChangeId}
+      />
       <Button
         type="button"
         onClick={() => onContactDelete(id)}
         variant="outline"
+        px={2}
       >
         <Icon as={RiDeleteBin6Line} boxSize={6} color="red" />
         {isDeleting && id === deletedId && (
@@ -57,5 +71,8 @@ Contact.protoTypes = {
       id: PropTypes.string.isRequired,
     })
   ),
+  deletedId: PropTypes.string.isRequired,
+  changedId: PropTypes.string.isRequired,
   onContactDelete: PropTypes.func.isRequired,
+  onChangeId: PropTypes.func.isRequired,
 };

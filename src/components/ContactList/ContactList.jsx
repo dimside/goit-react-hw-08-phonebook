@@ -7,11 +7,11 @@ import { deleteContactThunk } from 'redux/contacts/operations';
 
 import { Contact } from 'components/Contact/Contact';
 
-import {  Flex, Button } from '@chakra-ui/react';
-
+import { Flex, Button } from '@chakra-ui/react';
 
 export const ContactList = () => {
   const [deletedId, setDeletedId] = useState(null);
+  const [changingId, setChangingId] = useState(null);
   const [isSorted, setIsSorted] = useState(false);
 
   const filter = useSelector(selectFilter);
@@ -27,6 +27,10 @@ export const ContactList = () => {
   });
 
   const dispatch = useDispatch();
+
+  const handleContactChange = contactId => {
+    setChangingId(contactId);
+  };
 
   const handleContactDelete = contactId => {
     setDeletedId(contactId);
@@ -66,6 +70,8 @@ export const ContactList = () => {
             contact={contact}
             deletedId={deletedId}
             onContactDelete={handleContactDelete}
+            onChangeId={handleContactChange}
+            changedId={changingId}
           />
         ))}
       </Flex>

@@ -4,6 +4,7 @@ import {
   getContactsThunk,
   addContactThunk,
   deleteContactThunk,
+  editContactThunk,
 } from './operations';
 
 const initialState = {
@@ -12,11 +13,17 @@ const initialState = {
     isLoadingAll: false,
     isLoadingContact: false,
     isDeleting: false,
+    isChanging: false,
   },
   error: null,
 };
 
-const thunks = [getContactsThunk, addContactThunk, deleteContactThunk];
+const thunks = [
+  getContactsThunk,
+  addContactThunk,
+  deleteContactThunk,
+  editContactThunk,
+];
 const handleTypeThunks = type => thunks.map(el => el[type]);
 
 const handlePending = type => {
@@ -33,6 +40,10 @@ const handlePending = type => {
       return state => {
         state.isLoading.isDeleting = true;
       };
+    case 'isChanging':
+      return state => {
+        state.isLoading.isChanging = true;
+      };
     default:
       return;
   }
@@ -42,6 +53,7 @@ const handleEndOfLoading = state => {
   state.isLoading.isLoadingAll = false;
   state.isLoading.isLoadingContact = false;
   state.isLoading.isDeleting = false;
+  state.isLoading.isChanging = false;
 };
 
 const handleReject = (state, { payload }) => {
@@ -67,6 +79,13 @@ const handleFulfilled = type => {
       return (state, { payload }) => {
         state.items = state.items.filter(({ id }) => id !== payload.id);
       };
+    case 'edit':
+      return (state, { payload }) => {
+        state.items = state.items.map(item => {
+          if (payload.id === item.id) return payload;
+          return item;
+        });
+      };
     default:
       return;
   }
@@ -80,9 +99,11 @@ const contactsSlice = createSlice({
       .addCase(getContactsThunk.fulfilled, handleFulfilled('get'))
       .addCase(addContactThunk.fulfilled, handleFulfilled('add'))
       .addCase(deleteContactThunk.fulfilled, handleFulfilled('delete'))
+      .addCase(editContactThunk.fulfilled, handleFulfilled('edit'))
       .addCase(getContactsThunk.pending, handlePending('isLoadingAll'))
       .addCase(addContactThunk.pending, handlePending('isLoadingContact'))
       .addCase(deleteContactThunk.pending, handlePending('isDeleting'))
+      .addCase(editContactThunk.pending, handlePending('isChanging'))
       .addMatcher(isAnyOf(...handleTypeThunks('rejected')), handleReject)
       .addMatcher(
         isAnyOf(...handleTypeThunks('fulfilled')),
