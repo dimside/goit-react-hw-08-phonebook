@@ -12,6 +12,9 @@ import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
 import { useAuth } from 'hooks/useAuth';
 
+// import { Container } from '@chakra-ui/react';
+// import bcg from 'images/bcgmin.jpg';
+
 export const App = () => {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
@@ -21,10 +24,13 @@ export const App = () => {
   }, [dispatch]);
 
   return (
+    
     <>
-      {isRefreshing ? (
-        <b>Page is refreshing</b>
-      ) : (
+      {/* // style={{
+      //   backgroundImage: `linear-gradient(rgba(46, 47, 66, 0.7), rgba(46, 47, 66, 0.7)), url(${bcg})`,
+      // }} */}
+    
+      {!isRefreshing && (
         <Routes>
           <Route path="/" element={<SharedLayout />}>
             <Route index element={<Home />} />

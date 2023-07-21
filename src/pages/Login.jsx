@@ -1,10 +1,13 @@
-import { LoginForm } from "components/LoginForm/LoginForm";
+import { LoginForm } from 'components/LoginForm/LoginForm';
 
+import { Box, Container } from '@chakra-ui/react';
 
 export const Login = () => {
   return (
-    <div>
-      <LoginForm/>
-    </div>
+    <Box as="main" py={10} h="100vh">
+      <Container maxW="container.md">
+        <LoginForm />
+      </Container>
+    </Box>
   );
 };

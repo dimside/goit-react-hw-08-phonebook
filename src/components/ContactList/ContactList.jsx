@@ -6,7 +6,8 @@ import { selectFilter } from 'redux/contacts/selectors';
 import { deleteContactThunk } from 'redux/contacts/operations';
 
 import { Contact } from 'components/Contact/Contact';
-import css from './ContactList.module.css';
+
+import {  Flex, Button } from '@chakra-ui/react';
 
 
 export const ContactList = () => {
@@ -37,11 +38,28 @@ export const ContactList = () => {
   };
 
   return (
-    <div>
-      <button type="button" onClick={toggleSort} className={css.sort_button}>
+    <Flex
+      direction="column"
+      gap={4}
+      sx={{ outline: '1px solid grey', borderRadius: '10px' }}
+      p={6}
+      background="rgba(180, 255, 255, 0.4)"
+      boxShadow="0px 8px 30px rgba(12, 4, 35, 0.9)"
+    >
+      <Button
+        type="button"
+        onClick={toggleSort}
+        variant="outline"
+        size="md"
+        w="100px"
+        borderRadius={20}
+        fontSize={22}
+        background="#51AC9F"
+        _hover={{ backgroundColor: '#C5848D' }}
+      >
         Sort
-      </button>
-      <ul className={css.contact_list}>
+      </Button>
+      <Flex as="ul" direction="column" gap={3}>
         {filteredContacts.map(contact => (
           <Contact
             key={contact.id}
@@ -50,7 +68,7 @@ export const ContactList = () => {
             onContactDelete={handleContactDelete}
           />
         ))}
-      </ul>
-    </div>
+      </Flex>
+    </Flex>
   );
 };

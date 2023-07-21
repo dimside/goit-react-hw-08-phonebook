@@ -7,8 +7,8 @@ import { toast } from 'react-toastify';
 import { selectContacts } from 'redux/contacts/selectors';
 import { addContactThunk } from 'redux/contacts/operations';
 
-import css from './ContactForm.module.css';
-
+import { FormLabel, Flex, Button, Input } from '@chakra-ui/react';
+import { formStyle, inputStyle } from 'style/style';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
@@ -53,39 +53,58 @@ export const ContactForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className={css.contact_form}>
-        <label className={css.form_label}>
-          Name
-          <input
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            value={name}
-            onChange={handleChange}
-            className={css.form_input}
-          />
-        </label>
-        <label className={css.form_label}>
-          Number
-          <input
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            value={number}
-            onChange={handleChange}
-            className={css.form_input}
-          />
-        </label>
-        <button type="submit" className={css.form_button}>
-          Add contact{' '}
-          {isLoadingContact && <RotatingLines strokeColor="green" width="20" />}
-        </button>
-      </form>
-    </div>
+    <Flex
+      as="form"
+      direction="column"
+      align="center"
+      onSubmit={handleSubmit}
+      sx={formStyle}
+    >
+      <FormLabel alignSelf="start" fontSize={28}>
+        {' '}
+        Name
+      </FormLabel>
+
+      <Input
+        type="text"
+        name="name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        required
+        value={name}
+        onChange={handleChange}
+        marginBottom={4}
+        sx={inputStyle}
+      />
+
+      <FormLabel alignSelf="start" fontSize={28}>
+        Number
+      </FormLabel>
+
+      <Input
+        type="tel"
+        name="number"
+        pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
+        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+        required
+        value={number}
+        onChange={handleChange}
+        marginBottom={8}
+        sx={inputStyle}
+      />
+
+      <Button
+        type="submit"
+        variant="outline"
+        size="md"
+        w="50%"
+        borderRadius={20}
+        fontSize={22}
+        _hover={{ backgroundColor: '#C5848D' }}
+      >
+        Add contact{' '}
+        {isLoadingContact && <RotatingLines strokeColor="green" width="20" />}
+      </Button>
+    </Flex>
   );
 };

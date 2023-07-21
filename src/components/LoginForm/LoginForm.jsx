@@ -3,6 +3,10 @@ import { RotatingLines } from 'react-loader-spinner';
 import { loginAuthThunk } from 'redux/auth/operations';
 import { useAuth } from 'hooks/useAuth';
 
+import { FormLabel, Flex, Button, Input } from '@chakra-ui/react';
+import {formStyle, inputStyle} from "style/style"
+
+
 export const LoginForm = () => {
   const dispatch = useDispatch();
   const { isAuthWaiting } = useAuth();
@@ -18,19 +22,49 @@ export const LoginForm = () => {
     form.reset();
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Email
-        <input type="email" name="email" />
-      </label>
-      <label>
-        Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">
-        Log In
-        {isAuthWaiting && <RotatingLines strokeColor="purple" width="10" />}
-      </button>
-    </form>
+    <>
+      <Flex
+        as="form"
+        direction="column"
+        align="center"
+        onSubmit={handleSubmit}
+        sx={formStyle}
+      >
+        <FormLabel alignSelf="start" fontSize={28}>
+          Email
+        </FormLabel>
+        <Input
+          type="email"
+          name="email"
+          required
+          marginBottom={4}
+          sx={inputStyle}
+        />
+
+        <FormLabel alignSelf="start" fontSize={28}>
+          Password
+        </FormLabel>
+        <Input
+          type="password"
+          name="password"
+          required
+          marginBottom={8}
+          sx={inputStyle}
+        />
+
+        <Button
+          type="submit"
+          variant="outline"
+          size="md"
+          w="50%"
+          borderRadius={20}
+          fontSize={22}
+          _hover={{ backgroundColor: '#C5848D' }}
+        >
+          Log In
+          {isAuthWaiting && <RotatingLines strokeColor="purple" width="10" />}
+        </Button>
+      </Flex>
+    </>
   );
 };
