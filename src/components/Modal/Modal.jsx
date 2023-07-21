@@ -68,7 +68,7 @@ export const EditModal = ({
       >
         <ModalOverlay />
         <ModalContent
-          backgroundColor="rgba(180, 255, 255)"
+          // backgroundColor="rgba(180, 255, 255)"
           boxShadow="0px 8px 30px rgba(12, 4, 35, 0.9)"
         >
           <ModalHeader>Contact editor</ModalHeader>
@@ -87,7 +87,7 @@ export const EditModal = ({
                   required
                   value={contact.name}
                   onChange={handleChange}
-                  backgroundColor="rgba(255, 255, 255)"
+                  // backgroundColor="rgba(255, 255, 255)"
                 />
               </FormControl>
 
@@ -102,7 +102,7 @@ export const EditModal = ({
                   required
                   value={contact.number}
                   onChange={handleChange}
-                  backgroundColor="rgba(255, 255, 255)"
+                  // backgroundColor="rgba(255, 255, 255)"
                 />
               </FormControl>
               <ModalFooter mt={4}>
